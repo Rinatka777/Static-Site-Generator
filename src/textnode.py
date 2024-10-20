@@ -5,6 +5,13 @@ class NodeType(Enum):
     LEAF = "leaf"
     TEXT = "text"
 
+class TextType(Enum):
+    PLAIN = "plain"  
+    BOLD = "bold"  
+    LINK = "link"  
+    HTML = "html"  
+    IMAGE = "image"  
+    
 class TextNode:
     def __init__(self, text, text_type, value, url = None):
         self.text = text  # The text content of the node
