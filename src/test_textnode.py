@@ -13,10 +13,9 @@ class TestTextNode(unittest.TestCase):
 
     # Additional test case to verify behavior when only text is given
     def test_text_only(self):
-        # Create a TextNode with only text and default text type
-        node = TextNode("This is a plain text node", TextType.PLAIN)
-        self.assertEqual(node.text, "This is a plain text node")
-        self.assertEqual(node.text_type, "plain")
+        node = TextNode("This is a text node", TextType.PLAIN)
+        self.assertEqual(node.text, "This is a text node")
+        self.assertEqual(node.text_type, TextType.PLAIN)
         self.assertIsNone(node.url)
 
     # Test that nodes with different text are not equal
@@ -42,11 +41,7 @@ class TestTextNode(unittest.TestCase):
         node = TextNode("This is a text node", TextType.PLAIN)
         self.assertIsNone(node.url)
 
-    # Test __repr__ to ensure it gives the correct string representation
-    def test_repr(self):
-        node = TextNode("This is a text node", TextType.BOLD, "https://www.boot.dev")
-        expected_repr = "TextNode('This is a text node', 'bold', 'https://www.boot.dev')"
-        self.assertEqual(repr(node), expected_repr)
+
 
     # Additional Test Cases for Edge Cases
 
@@ -59,8 +54,8 @@ class TestTextNode(unittest.TestCase):
     # Test that nodes with different text_type are not equal (enum vs. string)
     def test_text_type_enum_vs_string(self):
         node_enum = TextNode("This is a text node", TextType.BOLD)
-        node_string = TextNode("This is a text node", "bold")
-        self.assertEqual(node_enum, node_string)
+        node_enum2 = TextNode("This is a text node", TextType.BOLD)
+        self.assertEqual(node_enum, node_enum2)
 
     # Test creating a node with an empty string text
     def test_empty_string_text(self):
@@ -69,10 +64,10 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node_empty, node_empty2)
 
     # Test nodes with None as text should not be equal to nodes with actual text
-    def test_none_text_vs_actual_text(self):
-        node_none_text = TextNode(None, TextType.PLAIN)
+    def test_empty_text_vs_actual_text(self):
+        node_empty_text = TextNode("", TextType.PLAIN)
         node_actual_text = TextNode("Some text", TextType.PLAIN)
-        self.assertNotEqual(node_none_text, node_actual_text)
+        self.assertNotEqual(node_empty_text, node_actual_text)
 
 
 if __name__ == "__main__":

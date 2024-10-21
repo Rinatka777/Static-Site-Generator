@@ -13,10 +13,10 @@ class TextType(Enum):
     IMAGE = "image"  
     
 class TextNode:
-    def __init__(self, text, text_type, value, url = None):
-        self.text = text  # The text content of the node
+    def __init__(self, text, text_type, url=None):
+        self.text = text
         self.text_type = text_type
-        self.url = url  # The URL of the link or image, defaults to None if not provided
+        self.url = url
     def __eq__(self, other):
         # Check if 'other' is an instance of TextNode
         if not isinstance(other, TextNode):
