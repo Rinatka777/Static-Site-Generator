@@ -34,3 +34,24 @@ class LeafNode(HTMLNode):
         if self.tag is None:
             return self.value
         return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+    
+class ParentNode(HTMLNode):
+    def __init__(self, tag, props, value=None):
+         super().__init__(tag=tag, value=None, children=[], props=props)
+
+    def __init__(self, tag=None, props=None, children=None):
+        # Ensure that children argument is mandatory and non-empty
+        if children is None or not children:
+            raise ValueError("Children must be provided and cannot be empty.")
+        
+        # Call parent constructor but exclude the value argument
+        super().__init__(tag, props, children)
+    
+    def to_html(self):
+        # If tag is None, raise an error
+        if self.tag is None:
+            raise ValueError("Tag must be provided.")
+        
+        # If there are no children, raise a different error
+        if not self.children:
+            raise ValueError("Children must be provided and cannot be empty.")
