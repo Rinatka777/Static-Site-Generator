@@ -36,22 +36,6 @@ class LeafNode(HTMLNode):
 
     def __repr__(self):
         return f"LeafNode({self.tag}, {self.value}, {self.props})"
-    
-    def text_node_to_html_node(text_node):
-        if text_node.type == TextType.TEXT:
-        return LeafNode(text=text_node.text, tag=None)
-    elif text_node.type == TextType.BOLD:
-        return LeafNode(text=text_node.text, tag="b")
-    elif text_node.type == TextType.ITALIC:
-        return LeafNode()
-    elif text_node.type == TextType.CODE:
-        # Handle CODE case
-    elif text_node.type == TextType.LINK:
-        # Handle LINK case
-    elif text_node.type == TextType.IMAGE:
-        # Handle IMAGE case
-    else:
-        raise Exception("Unsupported text type.")
         
 
 class ParentNode(HTMLNode):
