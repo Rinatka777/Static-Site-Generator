@@ -7,6 +7,7 @@ def main():
     # Print the TextNode object
     print(text_node)
 
+
 # Call the main function
 if __name__ == "__main__":
     main()
