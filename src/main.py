@@ -33,7 +33,7 @@ def main():
         shutil.rmtree(public_dir)
     os.mkdir(public_dir)
 
-    static_dir = "static"
+    static_dir = os.path.join("..", "static")
     copy_directory_contents(static_dir, public_dir)
 
     print("All static files successfully copied to 'public'.")
