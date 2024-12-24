@@ -28,14 +28,14 @@ def copy_directory_contents(src, dest):
             copy_directory_contents(src_path, dest_path)
 
 def main():
-    public_dir = "public"
+    public_dir = "public"    # means sitegen/public
+    static_dir = "static"    # means sitegen/static
+
     if os.path.exists(public_dir):
         shutil.rmtree(public_dir)
     os.mkdir(public_dir)
 
-    static_dir = os.path.join("..", "static")
     copy_directory_contents(static_dir, public_dir)
-
     print("All static files successfully copied to 'public'.")
 
     # Demonstrate the TextNode usage
