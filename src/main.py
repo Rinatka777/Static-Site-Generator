@@ -1,42 +1,35 @@
 import os
 import shutil
+
 from textnode import TextNode, TextType
-
-def copy_directory_contents(src, dest):
-    """
-    Recursively copies everything from src to dest,
-    creating dest if it doesn't already exist.
-    """
-
-    # 1) We need to *call* os.path.exists(dest), not just reference os.path.exists
-    if not os.path.exists(dest):
-        os.mkdir(dest)
-
-    # 2) We also need to *call* os.listdir(src), not just reference os.listdir
-    for item in os.listdir(src):
-        src_path = os.path.join(src, item)
-        dest_path = os.path.join(dest, item)
-
-        # Check if 'src_path' is a file or directory
-        if os.path.isfile(src_path):
-            # It's a file, so copy it
-            shutil.copy(src_path, dest_path)
-            print(f"Copied file: {src_path} -> {dest_path}")
-        else:
-            # It's a directory, so recurse
-            print(f"Entering directory: {src_path}")
-            copy_directory_contents(src_path, dest_path)
+from copystatic import copy_files_recursive
+from gencontent import generate_page
 
 def main():
-    public_dir = "public"    # means sitegen/public
-    static_dir = "static"    # means sitegen/static
+    # Determine the directory where main.py is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
 
+    # Define paths relative to script_dir
+    static_dir = os.path.join(script_dir, '..', 'static')
+    public_dir = os.path.join(script_dir, '..', 'public')
+    content_dir = os.path.join(script_dir, '..', 'content')
+    template_path = os.path.join(script_dir, '..', 'template.html')
+
+    print("Deleting public directory...")
     if os.path.exists(public_dir):
         shutil.rmtree(public_dir)
-    os.mkdir(public_dir)
 
-    copy_directory_contents(static_dir, public_dir)
-    print("All static files successfully copied to 'public'.")
+    print("Copying static files to public directory...")
+    copy_files_recursive(static_dir, public_dir)
+
+    print("Generating page...")
+    generate_page(
+        os.path.join(content_dir, "index.md"),
+        template_path,
+        os.path.join(public_dir, "index.html"),
+    )
+
+    print("All operations completed successfully.")
 
     # Demonstrate the TextNode usage
     node = TextNode("This is a text node", TextType.BOLD, "https://www.boot.dev")
