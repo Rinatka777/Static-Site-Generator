@@ -3,37 +3,23 @@ import shutil
 
 from textnode import TextNode, TextType
 from copystatic import copy_files_recursive
-from gencontent import generate_page
+from gencontent import generate_pages_recursive
+
+dir_path_static = "./static"
+dir_path_public = "./public"
+dir_path_content = "./content"
+template_path = "./template.html"
 
 def main():
-    # Determine the directory where main.py is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Define paths relative to script_dir
-    static_dir = os.path.join(script_dir, '..', 'static')
-    public_dir = os.path.join(script_dir, '..', 'public')
-    content_dir = os.path.join(script_dir, '..', 'content')
-    template_path = os.path.join(script_dir, '..', 'template.html')
-
     print("Deleting public directory...")
-    if os.path.exists(public_dir):
-        shutil.rmtree(public_dir)
+    if os.path.exists(dir_path_public):
+        shutil.rmtree(dir_path_public)
 
     print("Copying static files to public directory...")
-    copy_files_recursive(static_dir, public_dir)
+    copy_files_recursive(dir_path_static, dir_path_public)
 
-    print("Generating page...")
-    generate_page(
-        os.path.join(content_dir, "index.md"),
-        template_path,
-        os.path.join(public_dir, "index.html"),
-    )
+    print("Generating content...")
+    generate_pages_recursive(dir_path_content, template_path, dir_path_public)
 
-    print("All operations completed successfully.")
 
-    # Demonstrate the TextNode usage
-    node = TextNode("This is a text node", TextType.BOLD, "https://www.boot.dev")
-    print(node)
-
-if __name__ == "__main__":
-    main()
+main()
